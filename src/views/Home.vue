@@ -23,6 +23,7 @@
 // @ is an alias to /src
 import _ from "lodash";
 import {computed, ref, watch} from "vue";
+import {launchConfetti} from "@/util/confetti";
 import Card from "@/components/Card";
 
 export default {
@@ -134,6 +135,11 @@ export default {
       }
     }, {deep: true})
 
+    watch(remainingPairs, (currentValue) => {
+      if (currentValue === 0){
+        launchConfetti();
+      }
+    })
     return {
       cardList,
       userSelection,
