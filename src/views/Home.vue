@@ -12,11 +12,13 @@
     />
   </section>
   <h2>{{ status }}</h2>
+  <button @click="shuffleCards">Shuffle Cards</button>
 </template>
 
 <script>
 // @ is an alias to /src
-import {computed, ref, watch} from "vue"
+import _ from "lodash";
+import {computed, ref, watch} from "vue";
 import Card from "@/components/Card";
 
 export default {
@@ -25,8 +27,25 @@ export default {
     Card
   },
   setup() {
+    //Data
     const cardList = ref([]);
     const userSelection = ref([]);
+
+    for (let i = 0; i < 16; i++) {
+      cardList.value.push({
+        value: i === 8 ? 0 : i > 7 ? i - 8 : i,
+        visible: true,
+        position: i,
+        matched: false
+      });
+    }
+
+    //Computed
+    const remainingPairs = computed(() => {
+      const remainingCards = cardList.value.filter(card => card.matched === false).length;
+      return remainingCards / 2;
+    })
+
     const status = computed(()=>{
       if (remainingPairs.value === 0){
         return "Player Win!"
@@ -35,21 +54,7 @@ export default {
       }
     });
 
-    for (let i = 0; i < 16; i++) {
-      cardList.value.push({
-        value: i === 8 ? 0 : i > 7 ? i - 8 : i,
-        visible: false,
-        position: i,
-        matched: false
-      });
-    }
-    console.log(cardList.value)
-
-    const remainingPairs = computed(() => {
-      const remainingCards = cardList.value.filter(card => card.matched === false).length;
-      return remainingCards / 2;
-    })
-
+    //Methods
     const flipCard = (payload) => {
       cardList.value[payload.position].visible = true;
 
@@ -60,6 +65,11 @@ export default {
       }
     }
 
+    const shuffleCards = () => {
+      cardList.value = _.shuffle(cardList.value);
+    }
+
+    //Watchers
     watch(userSelection, (currentValue) => {
       if (currentValue.length === 2){
         // console.log(currentValue[0]);
@@ -85,7 +95,8 @@ export default {
       userSelection,
       status,
       remainingPairs,
-      flipCard
+      flipCard,
+      shuffleCards
     };
   }
 };
