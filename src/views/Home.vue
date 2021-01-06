@@ -1,5 +1,6 @@
 <template>
-  <h1>Peek a Vue</h1>
+  <h1 class="sr-only">Peek -a- Vue</h1>
+  <img class="title" src="/images/peek-a-vue-title.png" alt="Peek-a-Vue">
   <section class="game-board">
     <Card
       v-for="(card, index) in cardList"
@@ -12,7 +13,10 @@
     />
   </section>
   <h2>{{ status }}</h2>
-  <button @click="restartGame">Restart Game</button>
+  <button class="button" @click="restartGame">
+    <img src="/images/restart.svg" alt="restart icon"/>
+    Restart Game
+  </button>
 </template>
 
 <script>
@@ -31,7 +35,9 @@ export default {
     const cardList = ref([]);
     const userSelection = ref([]);
 
-    const cardItems = [1, 2, 3, 4, 5, 6, 7, 8];
+    const cardItems = [
+      'bat', 'candy', 'cauldron', 'cupcake', 'ghost', 'moon', 'pumpkin', 'witch-hat'
+    ];
 
     cardItems.forEach(item => {
       cardList.value.push({
@@ -146,9 +152,44 @@ export default {
 <style>
 .game-board {
   display: grid;
-  grid-template-columns: 100px 100px 100px 100px;
-  grid-template-rows: 100px 100px 100px 100px;
-  grid-gap: 30px;
+  grid-template-columns: repeat(4, 120px);
+  grid-template-rows: repeat(4, 120px);
+  grid-gap: 24px;
   justify-content: center;
+}
+
+.button{
+  background: orange;
+  color: white;
+  padding: .75rem .5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
+  font-weight: bold;
+  border: 0;
+  outline: none;
+  border-radius: 5px;
+  box-shadow: 0 2px 10px #353432,0 -2px 10px #6e6e56;
+}
+.button:hover{
+  box-shadow: 0 2px 10px #9d7616,0 -2px 10px #a97e14;
+}
+.button img {
+  margin-right: 5px;
+}
+.sr-only{
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0,0,0,0);
+  border: 0;
+}
+
+.title{
+  padding-bottom: 30px;
 }
 </style>
