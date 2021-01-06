@@ -12,7 +12,7 @@
     />
   </section>
   <h2>{{ status }}</h2>
-  <button @click="shuffleCards">Shuffle Cards</button>
+  <button @click="restartGame">Restart Game</button>
 </template>
 
 <script>
@@ -33,8 +33,9 @@ export default {
 
     for (let i = 0; i < 16; i++) {
       cardList.value.push({
-        value: i === 8 ? 0 : i > 7 ? i - 8 : i,
-        visible: true,
+        // My equation for same value = 8 ? 0 : i > 7 ? i - 8 : i
+        value: i === 8,
+        visible: false,
         position: i,
         matched: false
       });
@@ -69,6 +70,18 @@ export default {
       cardList.value = _.shuffle(cardList.value);
     }
 
+    const restartGame = () => {
+      shuffleCards();
+      cardList.value = cardList.value.map((card, index) => {
+        return {
+          ...card,
+          matched: false,
+          position: index,
+          visible: false,
+        }
+      })
+    }
+
     //Watchers
     watch(userSelection, (currentValue) => {
       if (currentValue.length === 2){
@@ -96,7 +109,8 @@ export default {
       status,
       remainingPairs,
       flipCard,
-      shuffleCards
+      shuffleCards,
+      restartGame
     };
   }
 };
