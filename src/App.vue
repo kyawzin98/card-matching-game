@@ -6,6 +6,7 @@
 html, body {
   margin: 0;
   padding: 0;
+  height: 100vh;
 }
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
@@ -13,9 +14,8 @@ html, body {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #ffffff;
-  height: 100vh;
   background: url("/images/page-bg.png") #00070c ;
-  padding-top: 60px;
+  padding: 30px 0;
 }
 h1 {
   margin-top: 0;

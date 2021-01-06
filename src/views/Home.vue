@@ -181,7 +181,7 @@ export default {
   font-family: 'Titillium Web', sans-serif;
   background: orange;
   color: white;
-  padding: .75rem .5rem;
+  padding: .75rem 1rem;
   display: flex;
   align-items: center;
   justify-content: center;
