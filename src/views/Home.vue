@@ -1,6 +1,10 @@
 <template>
   <h1 class="sr-only">Peek -a- Vue</h1>
   <img class="title" src="/images/peek-a-vue-title.png" alt="Peek-a-Vue">
+  <section class="description">
+    <p>Welcome to Peek-a-Vue</p>
+    <p>A card matching game powered by Vue.js 3</p>
+  </section>
   <transition-group tag="section" class="game-board" name="shuffle-card">
     <Card
       v-for="(card) in cardList"
@@ -12,8 +16,12 @@
       @select-card="flipCard"
     />
   </transition-group>
-  <h2>{{ status }}</h2>
-  <button class="button" @click="restartGame">
+  <h2 class="status">{{ status }}</h2>
+  <button v-if="newPlayer" class="button" @click="startGame">
+    <img src="/images/play.svg" alt="start icon"/>
+    Start Game
+  </button>
+  <button v-else class="button" @click="restartGame">
     <img src="/images/restart.svg" alt="restart icon"/>
     Restart Game
   </button>
@@ -35,6 +43,7 @@ export default {
     //Data
     const cardList = ref([]);
     const userSelection = ref([]);
+    const newPlayer = ref(true);
 
     const cardItems = [
       'bat', 'candy', 'cauldron', 'cupcake', 'ghost', 'moon', 'pumpkin', 'witch-hat'
@@ -50,7 +59,7 @@ export default {
       });
       cardList.value.push({
         value: item,
-        visible: false,
+        visible: true,
         variant: 2,
         position: null,
         matched: false
@@ -114,6 +123,11 @@ export default {
       })
     }
 
+    const startGame = () => {
+      newPlayer.value = false;
+      restartGame();
+    }
+
     //Watchers
     watch(userSelection, (currentValue) => {
       if (currentValue.length === 2) {
@@ -145,7 +159,9 @@ export default {
       userSelection,
       status,
       remainingPairs,
+      newPlayer,
       flipCard,
+      startGame,
       restartGame
     };
   }
@@ -162,6 +178,7 @@ export default {
 }
 
 .button{
+  font-family: 'Titillium Web', sans-serif;
   background: orange;
   color: white;
   padding: .75rem .5rem;
@@ -199,4 +216,16 @@ export default {
 .shuffle-card-move{
   transition: transfrom 0.8s ease-in;
 }
+.description, .status{
+  font-family: 'Titillium Web', sans-serif;
+}
+.description p{
+  margin: 0;
+  font-size: 1.2rem;
+}
+.description p:last-child{
+  margin-bottom: 30px;
+}
+
+
 </style>
