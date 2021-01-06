@@ -31,7 +31,7 @@ export default {
     const cardList = ref([]);
     const userSelection = ref([]);
 
-    const cardItems = [1,2,3,4,5,6,7,8];
+    const cardItems = [1, 2, 3, 4, 5, 6, 7, 8];
 
     cardItems.forEach(item => {
       cardList.value.push({
@@ -71,10 +71,10 @@ export default {
       return remainingCards / 2;
     })
 
-    const status = computed(()=>{
-      if (remainingPairs.value === 0){
+    const status = computed(() => {
+      if (remainingPairs.value === 0) {
         return "Player Win!"
-      }else {
+      } else {
         return `Remaining Pairs ${remainingPairs.value}`
       }
     });
@@ -84,7 +84,10 @@ export default {
       cardList.value[payload.position].visible = true;
 
       if (userSelection.value[0]) {
-        userSelection.value[1] = payload;
+        if ((payload.position !== userSelection.value[0].position)
+          && (payload.value !== userSelection.value[0].faceValue)) {
+          userSelection.value[1] = payload;
+        }
       } else {
         userSelection.value[0] = payload;
       }
@@ -108,24 +111,24 @@ export default {
 
     //Watchers
     watch(userSelection, (currentValue) => {
-      if (currentValue.length === 2){
+      if (currentValue.length === 2) {
         // console.log(currentValue[0]);
         const cardOne = currentValue[0];
         const cardTwo = currentValue[1];
 
-        if (cardOne.faceValue === cardTwo.faceValue){
+        if (cardOne.faceValue === cardTwo.faceValue) {
           cardList.value[cardOne.position].matched = true;
           cardList.value[cardTwo.position].matched = true;
-        }else {
+        } else {
           setTimeout(() => {
             cardList.value[cardOne.position].visible = false;
             cardList.value[cardTwo.position].visible = false;
-          },2000)
+          }, 2000)
         }
 
         userSelection.value.length = 0;
       }
-    }, { deep: true})
+    }, {deep: true})
 
     return {
       cardList,
