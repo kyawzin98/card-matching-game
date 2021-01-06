@@ -1,17 +1,17 @@
 <template>
   <h1 class="sr-only">Peek -a- Vue</h1>
   <img class="title" src="/images/peek-a-vue-title.png" alt="Peek-a-Vue">
-  <section class="game-board">
+  <transition-group tag="section" class="game-board" name="shuffle-card">
     <Card
-      v-for="(card, index) in cardList"
-      :key="`card-${index}`"
+      v-for="(card) in cardList"
+      :key="`${card.value}-${card.variant}`"
       :value="card.value"
       :visible="card.visible"
       :position="card.position"
       :matched="card.matched"
       @select-card="flipCard"
     />
-  </section>
+  </transition-group>
   <h2>{{ status }}</h2>
   <button class="button" @click="restartGame">
     <img src="/images/restart.svg" alt="restart icon"/>
@@ -43,12 +43,14 @@ export default {
       cardList.value.push({
         value: item,
         visible: false,
+        variant: 1,
         position: null,
         matched: false
       });
       cardList.value.push({
         value: item,
         visible: false,
+        variant: 2,
         position: null,
         matched: false
       });
@@ -99,12 +101,8 @@ export default {
       }
     }
 
-    const shuffleCards = () => {
-      cardList.value = _.shuffle(cardList.value);
-    }
-
     const restartGame = () => {
-      shuffleCards();
+      cardList.value = _.shuffle(cardList.value);
       cardList.value = cardList.value.map((card, index) => {
         return {
           ...card,
@@ -142,7 +140,6 @@ export default {
       status,
       remainingPairs,
       flipCard,
-      shuffleCards,
       restartGame
     };
   }
@@ -191,5 +188,9 @@ export default {
 
 .title{
   padding-bottom: 30px;
+}
+
+.shuffle-card-move{
+  transition: transfrom 0.8s ease-in;
 }
 </style>
