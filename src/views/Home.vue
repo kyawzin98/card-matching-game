@@ -32,6 +32,7 @@
 import _ from "lodash";
 import {computed, ref, watch} from "vue";
 import {launchConfetti} from "@/util/confetti";
+import createDeck from "@/features/createDeck";
 import Card from "@/components/Card";
 
 export default {
@@ -41,47 +42,9 @@ export default {
   },
   setup() {
     //Data
-    const cardList = ref([]);
+    const {cardList} = createDeck();
     const userSelection = ref([]);
     const newPlayer = ref(true);
-
-    const cardItems = [
-      'bat', 'candy', 'cauldron', 'cupcake', 'ghost', 'moon', 'pumpkin', 'witch-hat'
-    ];
-
-    cardItems.forEach(item => {
-      cardList.value.push({
-        value: item,
-        visible: false,
-        variant: 1,
-        position: null,
-        matched: false
-      });
-      cardList.value.push({
-        value: item,
-        visible: true,
-        variant: 2,
-        position: null,
-        matched: false
-      });
-    })
-
-    cardList.value = cardList.value.map((card, index) => {
-      return {
-        ...card,
-        position: index
-      }
-    })
-
-    // for (let i = 0; i < 16; i++) {
-    //   cardList.value.push({
-    //     // My equation for same value = 8 ? 0 : i > 7 ? i - 8 : i
-    //     value: i === 8,
-    //     visible: false,
-    //     position: i,
-    //     matched: false
-    //   });
-    // }
 
     //Computed
     const remainingPairs = computed(() => {

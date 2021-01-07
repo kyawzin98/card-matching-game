@@ -81,7 +81,6 @@ export default {
   color: white;
   transform: rotateY(180deg);
 }
-
 .card-face.is-back{
   background: url("/images/card-bg-empty.png");
   color: white;
