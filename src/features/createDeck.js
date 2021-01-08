@@ -1,9 +1,8 @@
 import {ref} from "vue";
+// import halloweenDeck from "@/data/halloweenDeck.json"
 const cardList = ref([]);
 
-const cardItems = [
-  'bat', 'candy', 'cauldron', 'cupcake', 'ghost', 'moon', 'pumpkin', 'witch-hat'
-];
+// const cardItems = halloweenDeck;
 
 const initDeck = (deckData) => {
   deckData.forEach(item => {
@@ -43,8 +42,8 @@ const updateCardPosition = () => {
 //   });
 // }
 
-export default function createDeck() {
-  initDeck(cardItems);
+export default function createDeck(deckData) {
+  initDeck(deckData);
   updateCardPosition();
 
   return {
