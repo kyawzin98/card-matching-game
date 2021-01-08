@@ -29,10 +29,10 @@
 
 <script>
 // @ is an alias to /src
-import _ from "lodash";
-import {computed, ref, watch} from "vue";
+import { ref, watch} from "vue";
 import {launchConfetti} from "@/util/confetti";
 import createDeck from "@/features/createDeck";
+import createGame from "@/features/createGame"
 import Card from "@/components/Card";
 import halloweenDeck from "@/data/halloweenDeck.json"
 
@@ -45,21 +45,13 @@ export default {
     //Data
     const {cardList} = createDeck(halloweenDeck);
     const userSelection = ref([]);
-    const newPlayer = ref(true);
-
-    //Computed
-    const remainingPairs = computed(() => {
-      const remainingCards = cardList.value.filter(card => card.matched === false).length;
-      return remainingCards / 2;
-    })
-
-    const status = computed(() => {
-      if (remainingPairs.value === 0) {
-        return "Player Win!"
-      } else {
-        return `Remaining Pairs ${remainingPairs.value}`
-      }
-    });
+    const {
+      newPlayer,
+      startGame,
+      restartGame,
+      remainingPairs,
+      status
+    } = createGame(cardList)
 
     //Methods
     const flipCard = (payload) => {
@@ -73,23 +65,6 @@ export default {
       } else {
         userSelection.value[0] = payload;
       }
-    }
-
-    const restartGame = () => {
-      cardList.value = _.shuffle(cardList.value);
-      cardList.value = cardList.value.map((card, index) => {
-        return {
-          ...card,
-          matched: false,
-          position: index,
-          visible: false,
-        }
-      })
-    }
-
-    const startGame = () => {
-      newPlayer.value = false;
-      restartGame();
     }
 
     //Watchers
@@ -114,10 +89,11 @@ export default {
     }, {deep: true})
 
     watch(remainingPairs, (currentValue) => {
-      if (currentValue === 0){
+      if (currentValue === 0) {
         launchConfetti();
       }
     })
+
     return {
       cardList,
       userSelection,
@@ -141,7 +117,7 @@ export default {
   justify-content: center;
 }
 
-.button{
+.button {
   font-family: 'Titillium Web', sans-serif;
   background: orange;
   color: white;
@@ -154,40 +130,46 @@ export default {
   border: 0;
   outline: none;
   border-radius: 5px;
-  box-shadow: 0 2px 10px #353432,0 -2px 10px #6e6e56;
+  box-shadow: 0 2px 10px #353432, 0 -2px 10px #6e6e56;
 }
-.button:hover{
-  box-shadow: 0 2px 10px #9d7616,0 -2px 10px #a97e14;
+
+.button:hover {
+  box-shadow: 0 2px 10px #9d7616, 0 -2px 10px #a97e14;
 }
+
 .button img {
   margin-right: 5px;
 }
-.sr-only{
+
+.sr-only {
   position: absolute;
   width: 1px;
   height: 1px;
   padding: 0;
   margin: -1px;
   overflow: hidden;
-  clip: rect(0,0,0,0);
+  clip: rect(0, 0, 0, 0);
   border: 0;
 }
 
-.title{
+.title {
   padding-bottom: 30px;
 }
 
-.shuffle-card-move{
+.shuffle-card-move {
   transition: transfrom 0.8s ease-in;
 }
-.description, .status{
+
+.description, .status {
   font-family: 'Titillium Web', sans-serif;
 }
-.description p{
+
+.description p {
   margin: 0;
   font-size: 1.2rem;
 }
-.description p:last-child{
+
+.description p:last-child {
   margin-bottom: 30px;
 }
 
