@@ -1,10 +1,9 @@
 <template>
-  <h1 class="sr-only">Peek -a- Vue</h1>
-  <img class="title" src="/images/peek-a-vue-title.png" alt="Peek-a-Vue">
-  <section class="description">
-    <p>Welcome to Peek-a-Vue</p>
-    <p>A card matching game powered by Vue.js 3</p>
-  </section>
+  <HeroSection />
+  <NewGameButton
+    :new-player="newPlayer"
+    @start-new-game="startNewGame"
+  />
   <transition-group tag="section" class="game-board" name="shuffle-card">
     <Card
       v-for="(card) in cardList"
@@ -17,14 +16,6 @@
     />
   </transition-group>
   <h2 class="status">{{ status }}</h2>
-  <button v-if="newPlayer" class="button" @click="startGame">
-    <img src="/images/play.svg" alt="start icon"/>
-    Start Game
-  </button>
-  <button v-else class="button" @click="restartGame">
-    <img src="/images/restart.svg" alt="restart icon"/>
-    Restart Game
-  </button>
 </template>
 
 <script>
@@ -35,10 +26,14 @@ import createDeck from "@/features/createDeck";
 import createGame from "@/features/createGame"
 import Card from "@/components/Card";
 import halloweenDeck from "@/data/halloweenDeck.json"
+import HeroSection from "@/views/partials/HeroSection";
+import NewGameButton from "@/components/NewGameButton";
 
 export default {
   name: "Home",
   components: {
+    NewGameButton,
+    HeroSection,
     Card
   },
   setup() {
@@ -54,6 +49,14 @@ export default {
     } = createGame(cardList)
 
     //Methods
+    const startNewGame = () => {
+      if (newPlayer){
+        startGame()
+      }else {
+        restartGame()
+      }
+    }
+
     const flipCard = (payload) => {
       cardList.value[payload.position].visible = true;
 
@@ -101,8 +104,7 @@ export default {
       remainingPairs,
       newPlayer,
       flipCard,
-      startGame,
-      restartGame
+      startNewGame
     };
   }
 };
@@ -117,61 +119,8 @@ export default {
   justify-content: center;
 }
 
-.button {
-  font-family: 'Titillium Web', sans-serif;
-  background: orange;
-  color: white;
-  padding: .75rem 1rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin: 0 auto;
-  font-weight: bold;
-  border: 0;
-  outline: none;
-  border-radius: 5px;
-  box-shadow: 0 2px 10px #353432, 0 -2px 10px #6e6e56;
-}
-
-.button:hover {
-  box-shadow: 0 2px 10px #9d7616, 0 -2px 10px #a97e14;
-}
-
-.button img {
-  margin-right: 5px;
-}
-
-.sr-only {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  padding: 0;
-  margin: -1px;
-  overflow: hidden;
-  clip: rect(0, 0, 0, 0);
-  border: 0;
-}
-
-.title {
-  padding-bottom: 30px;
-}
-
-.shuffle-card-move {
-  transition: transfrom 0.8s ease-in;
-}
-
-.description, .status {
+.status {
   font-family: 'Titillium Web', sans-serif;
 }
-
-.description p {
-  margin: 0;
-  font-size: 1.2rem;
-}
-
-.description p:last-child {
-  margin-bottom: 30px;
-}
-
 
 </style>
