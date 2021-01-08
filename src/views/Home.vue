@@ -4,18 +4,11 @@
     :new-player="newPlayer"
     @start-new-game="startNewGame"
   />
-  <transition-group tag="section" class="game-board" name="shuffle-card">
-    <Card
-      v-for="(card) in cardList"
-      :key="`${card.value}-${card.variant}`"
-      :value="card.value"
-      :visible="card.visible"
-      :position="card.position"
-      :matched="card.matched"
-      @select-card="flipCard"
-    />
-  </transition-group>
-  <h2 class="status">{{ status }}</h2>
+  <GameBoard
+    :card-list="cardList"
+    :status="status"
+    @flip-card="flipCard"
+  />
 </template>
 
 <script>
@@ -24,17 +17,17 @@ import { ref, watch} from "vue";
 import {launchConfetti} from "@/util/confetti";
 import createDeck from "@/features/createDeck";
 import createGame from "@/features/createGame"
-import Card from "@/components/Card";
 import halloweenDeck from "@/data/halloweenDeck.json"
 import HeroSection from "@/views/partials/HeroSection";
 import NewGameButton from "@/components/NewGameButton";
+import GameBoard from "@/components/GameBoard";
 
 export default {
   name: "Home",
   components: {
+    GameBoard,
     NewGameButton,
     HeroSection,
-    Card
   },
   setup() {
     //Data
@@ -111,16 +104,5 @@ export default {
 </script>
 
 <style>
-.game-board {
-  display: grid;
-  grid-template-columns: repeat(4, 120px);
-  grid-template-rows: repeat(4, 120px);
-  grid-gap: 24px;
-  justify-content: center;
-}
-
-.status {
-  font-family: 'Titillium Web', sans-serif;
-}
 
 </style>
