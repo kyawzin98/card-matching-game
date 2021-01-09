@@ -1,6 +1,6 @@
 <template>
   <h1 class="sr-only">Peek -a- Vue</h1>
-  <img class="title" src="/images/peek-a-vue-title.png" alt="Peek-a-Vue" />
+  <img class="title" src="/card-matching-game/images/peek-a-vue-title.png" alt="Peek-a-Vue" />
   <section class="description">
     <p>Welcome to Peek-a-Vue</p>
     <p>A card matching game powered by Vue.js 3</p>

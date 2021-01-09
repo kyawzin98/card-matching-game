@@ -1,8 +1,8 @@
 <template>
   <div class="card" :class="flippedStyles" @click="selectCard">
     <div class="card-face is-front">
-      <img :src="`/images/${value}.png`" :alt="value" />
-      <img v-if="matched" src="images/checkmark.svg" class="icon-checkmark" />
+      <img :src="`/card-matching-game/images/${value}.png`" :alt="value" />
+      <img v-if="matched" src="/card-matching-game/images/checkmark.svg" class="icon-checkmark" />
     </div>
     <div class="card-face is-back"></div>
   </div>
@@ -76,12 +76,12 @@ export default {
   backface-visibility: hidden;
 }
 .card-face.is-front {
-  background: url("/images/card-bg.png");
+  background: url("/card-matching-game/images/card-bg.png");
   color: white;
   transform: rotateY(180deg);
 }
 .card-face.is-back {
-  background: url("/images/card-bg-empty.png");
+  background: url("/card-matching-game/images/card-bg-empty.png");
   color: white;
 }
 .icon-checkmark {

@@ -15,7 +15,7 @@ body {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #ffffff;
-  background: url("/images/page-bg.png") #00070c;
+  background: url("/card-matching-game/images/page-bg.png") #00070c;
   padding: 30px 0;
 }
 h1 {

@@ -1,10 +1,10 @@
 <template>
   <button v-if="newPlayer" class="button" @click="startNewGame">
-    <img src="/images/play.svg" alt="start icon" />
+    <img src="/card-matching-game/images/play.svg" alt="start icon" />
     Start Game
   </button>
   <button v-else class="button" @click="startNewGame">
-    <img src="/images/restart.svg" alt="restart icon" />
+    <img src="/card-matching-game/images/restart.svg" alt="restart icon" />
     Restart Game
   </button>
 </template>
