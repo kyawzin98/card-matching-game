@@ -1,10 +1,10 @@
 <template>
   <button v-if="newPlayer" class="button" @click="startNewGame">
-    <img src="/images/play.svg" alt="start icon"/>
+    <img src="/images/play.svg" alt="start icon" />
     Start Game
   </button>
   <button v-else class="button" @click="startNewGame">
-    <img src="/images/restart.svg" alt="restart icon"/>
+    <img src="/images/restart.svg" alt="restart icon" />
     Restart Game
   </button>
 </template>
@@ -13,10 +13,10 @@
 export default {
   name: "NewGameButton",
   props: {
-    newPlayer:{
-      type:Boolean,
-      default: true,
-    },
+    newPlayer: {
+      type: Boolean,
+      default: true
+    }
     // startGame: {
     //   type:Function
     // },
@@ -24,24 +24,24 @@ export default {
     //   type:Function
     // }
   },
-  setup(props, context){
+  setup(props, context) {
     const startNewGame = () => {
-      context.emit('start-new-game')
-    }
+      context.emit("start-new-game");
+    };
 
     return {
       startNewGame
-    }
+    };
   }
-}
+};
 </script>
 
 <style scoped>
 .button {
-  font-family: 'Titillium Web', sans-serif;
+  font-family: "Titillium Web", sans-serif;
   background: orange;
   color: white;
-  padding: .75rem 1rem;
+  padding: 0.75rem 1rem;
   display: flex;
   align-items: center;
   justify-content: center;

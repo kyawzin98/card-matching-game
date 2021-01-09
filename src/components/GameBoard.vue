@@ -1,7 +1,7 @@
 <template>
   <transition-group tag="section" class="game-board" name="shuffle-card">
     <Card
-      v-for="(card) in cardList"
+      v-for="card in cardList"
       :key="`${card.value}-${card.variant}`"
       :value="card.value"
       :visible="card.visible"
@@ -27,17 +27,17 @@ export default {
       required: true
     }
   },
-  components: {Card},
-  setup(props, context){
-    const selectCard = (payload) => {
-      context.emit('flip-card', payload)
-    }
+  components: { Card },
+  setup(props, context) {
+    const selectCard = payload => {
+      context.emit("flip-card", payload);
+    };
 
     return {
       selectCard
-    }
+    };
   }
-}
+};
 </script>
 
 <style scoped>
@@ -50,6 +50,6 @@ export default {
 }
 
 .status {
-  font-family: 'Titillium Web', sans-serif;
+  font-family: "Titillium Web", sans-serif;
 }
 </style>

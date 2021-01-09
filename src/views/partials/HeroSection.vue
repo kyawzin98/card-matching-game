@@ -1,6 +1,6 @@
 <template>
   <h1 class="sr-only">Peek -a- Vue</h1>
-  <img class="title" src="/images/peek-a-vue-title.png" alt="Peek-a-Vue">
+  <img class="title" src="/images/peek-a-vue-title.png" alt="Peek-a-Vue" />
   <section class="description">
     <p>Welcome to Peek-a-Vue</p>
     <p>A card matching game powered by Vue.js 3</p>
@@ -9,8 +9,8 @@
 
 <script>
 export default {
-name: "HeroSection"
-}
+  name: "HeroSection"
+};
 </script>
 
 <style scoped>
@@ -33,8 +33,9 @@ name: "HeroSection"
   transition: transfrom 0.8s ease-in;
 }
 
-.description, .status {
-  font-family: 'Titillium Web', sans-serif;
+.description,
+.status {
+  font-family: "Titillium Web", sans-serif;
 }
 
 .description p {

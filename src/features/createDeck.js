@@ -1,10 +1,10 @@
-import {ref} from "vue";
+import { ref } from "vue";
 // import halloweenDeck from "@/data/halloweenDeck.json"
 const cardList = ref([]);
 
 // const cardItems = halloweenDeck;
 
-const initDeck = (deckData) => {
+const initDeck = deckData => {
   deckData.forEach(item => {
     cardList.value.push({
       value: item,
@@ -20,17 +20,17 @@ const initDeck = (deckData) => {
       position: null,
       matched: false
     });
-  })
-}
+  });
+};
 
 const updateCardPosition = () => {
   cardList.value = cardList.value.map((card, index) => {
     return {
       ...card,
       position: index
-    }
-  })
-}
+    };
+  });
+};
 
 // for (let i = 0; i < 16; i++) {
 //   cardList.value.push({
@@ -48,6 +48,5 @@ export default function createDeck(deckData) {
 
   return {
     cardList
-  }
-
+  };
 }
